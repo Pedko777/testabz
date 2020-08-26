@@ -1,0 +1,15 @@
+@import 'variables.scss';
+@import 'mixin.scss';
+
+.burgerMenuWrapper {
+  cursor: pointer;
+  width: 20px;
+  height: 15px;
+  z-index: 1;
+}
+.tabletBurger {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -1,0 +1,59 @@
+@import 'variables.scss';
+@import 'mixin.scss';
+
+.navContainer {
+  @include for-phone-only {
+    background-color: $bg-main-color;
+  }
+}
+
+.navList {
+  display: flex;
+  margin: 0 auto;
+  list-style: none;
+  @include for-phone-only {
+    flex-flow: column nowrap;
+    padding: 13px 15px 12px 15px;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    height: 100%;
+    width: 80%;
+    background-color: $bg-main-color;
+  }
+  @include for-tablet-only {
+    margin-right: 10px;
+  }
+}
+
+.navList > li:not(:last-of-type) {
+  margin-right: 25px;
+}
+
+.navLink {
+  border: none;
+  background-color: $bg-main-color;
+  text-decoration: none;
+  color: #212529;
+  font-size: 14px;
+  @include for-phone-only {
+    line-height: 24px;
+  }
+  @include for-desktop-up {
+    line-height: 60px;
+  }
+}
+
+.navLink:hover {
+  transition: 0.3s ease-in-out;
+  opacity: 0.75;
+  color: $primary-color;
+}
+
+.navLinkActive {
+  color: $secondary-color;
+}
+
+.navListItem {
+  border-bottom: 1px solid #e1e1e1;
+}

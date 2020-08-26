@@ -1,0 +1,81 @@
+@import 'variables.scss';
+@import 'mixin.scss';
+
+.navContainer {
+  @include for-phone-only {
+    display: flex;
+    justify-content: space-between;
+    background-color: $bg-main-color;
+  }
+}
+.logoLink {
+  @include for-phone-only {
+    margin: 0;
+    padding: 9px 15px 8px 20px;
+  }
+}
+.navList {
+  margin: 0 auto;
+  list-style: none;
+  @include for-phone-only {
+    flex-flow: column nowrap;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    height: 100%;
+    width: 80%;
+    background-color: $bg-main-color;
+  }
+}
+
+.navListWrapper {
+  @include for-phone-only {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 15px 20px;
+  }
+}
+
+.rightBar {
+  @include for-phone-only {
+    position: fixed;
+    top: -2px;
+    right: 0;
+    height: 100%;
+    width: 20%;
+    background-color: rgba(118, 126, 134, 0.5);
+  }
+}
+
+.navLink {
+  border: none;
+  background-color: $bg-main-color;
+  text-decoration: none;
+  color: #212529;
+  font-size: 14px;
+  @include for-phone-only {
+    line-height: 24px;
+  }
+}
+
+.navLink:hover {
+  transition: 0.3s ease-in-out;
+  color: $primary-color;
+}
+
+.navLinkActive {
+  color: $secondary-color;
+}
+
+.navListItem:not(:last-child) {
+  border-bottom: 1px solid #e1e1e1;
+}
+.navListItem:not(:first-child) {
+  height: 30%;
+}
+
+.logoWrapper {
+  height: 40px;
+}
