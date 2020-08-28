@@ -10,6 +10,8 @@ import ReactLoading from 'react-loading';
 
 import Header from './header/Header';
 import AbouteMe from './body/abouteMe/AbouteMe';
+import DatingSection from './body/datingSection/DatingSection';
+import UsersSection from './body/usersSection/UsersSection';
 // console.log(test)
 
 const App = () => {
@@ -28,6 +30,8 @@ const App = () => {
         >
           <Header />
           <AbouteMe />
+          <DatingSection />
+          <UsersSection />
         </Suspense>
       </BrowserRouter>
     </>

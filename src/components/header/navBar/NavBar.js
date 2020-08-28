@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styles from './NavBar.module.scss';
 import Media from 'react-media';
 
@@ -14,7 +14,7 @@ const NavBar = () => {
         <div className={styles.logo}>
           <Logo />
         </div>
-        <Media query="(max-width: 1199px)">
+        <Media query="(min-width: 360px) and (max-width: 1199px)">
           <BurgerMenu />
         </Media>
         <Media query="(min-width: 1200px)">

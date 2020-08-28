@@ -1,0 +1,14 @@
+@import 'variables.scss';
+
+.btn {
+  border: transparent;
+  background-color: $bg-main-color;
+  color: #ef5b4c;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus {
+  transition: 0.3s ease-in-out;
+  color: #d24335;
+}

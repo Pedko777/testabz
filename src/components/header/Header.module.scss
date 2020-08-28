@@ -1,15 +1,10 @@
 @import 'mixin.scss';
 
-.header {
-  //   position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-
-  @include for-phone-up {
-    justify-content: space-between;
-    padding: 13px 15px 12px 15px;
-    align-items: center;
-    height: 40px;
+.headerWrapper {
+  padding: 13px 15px 12px 15px;
+  align-items: center;
+  height: 40px;
+  @include for-tablet-up {
+    padding: 30px 23px;
   }
 }

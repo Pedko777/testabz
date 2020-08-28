@@ -1,0 +1,20 @@
+.btn {
+  width: 210px;
+  height: 38px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ef5b4c;
+  cursor: pointer;
+  color: #fefefe;
+}
+
+.btn:hover,
+.btn:focus {
+  transition: 0.3s ease-in-out;
+  background-color: #d24335;
+}
+
+.btn:disabled {
+  transition: 0.3s ease-in-out;
+  background-color: #d7d7d7;
+}

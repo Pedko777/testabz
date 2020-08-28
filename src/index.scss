@@ -1,3 +1,4 @@
+@import 'normalize.scss';
 @import 'variables.scss';
 @import 'mixin.scss';
 
@@ -75,14 +76,14 @@ button:focus {
 }
 
 .container {
-  width: 360px;
+  min-width: 360px;
   margin: 0 auto;
 
   @include for-tablet-up {
-    width: 660px;
+    min-width: 740px;
   }
 
   @include for-desktop-up {
-    width: 1140px;
+    min-width: 1170px;
   }
 }

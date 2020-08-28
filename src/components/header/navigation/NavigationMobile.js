@@ -126,7 +126,7 @@ const NavigationMobile = () => (
         </ul>
       </li>
     </ul>
-    <div className={styles.rightBar}></div>
+    {/* <div className={styles.rightBar}></div> */}
   </nav>
 );
 

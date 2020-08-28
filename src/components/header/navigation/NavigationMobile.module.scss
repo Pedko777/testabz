@@ -38,17 +38,6 @@
   }
 }
 
-.rightBar {
-  @include for-phone-only {
-    position: fixed;
-    top: -2px;
-    right: 0;
-    height: 100%;
-    width: 20%;
-    background-color: rgba(118, 126, 134, 0.5);
-  }
-}
-
 .navLink {
   border: none;
   background-color: $bg-main-color;

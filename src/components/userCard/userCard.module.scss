@@ -1,0 +1,36 @@
+.cardWrapper {
+  text-align: center;
+  box-sizing: content-box;
+  width: 100%;
+}
+
+.cardPhoto {
+  position: relative;
+  width: max-content;
+  margin: 0 auto;
+  padding: 15px 0 20px;
+}
+
+.cardPhoto img {
+  border-radius: 50%;
+}
+
+.cardName {
+  color: #212529;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.cardText {
+  color: #4c4b4b;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.cardTextWrapper p {
+  margin-bottom: 12px;
+}
+
+.cardTextWrapper p:last-of-type {
+  margin-bottom: 0;
+}
