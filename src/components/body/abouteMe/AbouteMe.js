@@ -5,7 +5,7 @@ import Button from '../../buttons/Button';
 const AbouteMe = () => {
   return (
     <div className={`${styles.sectionWrapper} container`}>
-      <div className={styles.elementWrapper}>
+      <div className={` wrapper`}>
         <h1 className={styles.sectionTitle}>
           Test assignment for Frontend Developer position
         </h1>

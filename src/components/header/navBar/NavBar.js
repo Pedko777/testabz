@@ -9,15 +9,15 @@ import BurgerMenu from '../burgerMenu/BurgerMenu';
 
 const NavBar = () => {
   return (
-    <div className={styles.nav}>
+    <div className={` ${styles.nav} wrapper`}>
       <>
         <div className={styles.logo}>
           <Logo />
         </div>
-        <Media query="(min-width: 360px) and (max-width: 1199px)">
+        <Media query="(min-width: 360px) and (max-width: 1023px)">
           <BurgerMenu />
         </Media>
-        <Media query="(min-width: 1200px)">
+        <Media query="(min-width: 1024px)">
           <Navigation />
         </Media>
       </>

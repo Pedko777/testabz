@@ -19,7 +19,7 @@ const BurgerMenu = () => {
       >
         {open ? <Close /> : <Burger />}
       </div>
-      <Media query="(min-width: 768px) and (max-width: 1199px)">
+      <Media query="(min-width: 768px) and (max-width: 1023px)">
         {open && <Navigation />}
       </Media>
       <Media query="(max-width: 767px)">{open && <NavigationMobile />}</Media>

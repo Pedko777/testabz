@@ -1,6 +1,10 @@
 @import 'mixin.scss';
 @import 'variables.scss';
 
+.sectionBg {
+  background-color: $bg-secondary-color;
+}
+
 .sectionWrapper {
   text-align: center;
   font-family: 'Open Sans';
@@ -9,7 +13,7 @@
   align-items: center;
   justify-content: space-around;
   margin-bottom: 50px;
-  background-color: $bg-secondary-color;
+
   @include for-tablet-up {
     flex-direction: row;
     flex-wrap: wrap;
@@ -34,6 +38,11 @@
     font-size: 50px;
     margin-bottom: 68px;
   }
+  @include for-desktop {
+    padding-top: 160px;
+    font-size: 50px;
+    margin-bottom: 68px;
+  }
 }
 
 .sectionDescription {
@@ -44,3 +53,56 @@
   line-height: 22px;
   margin-bottom: 38px;
 }
+
+.userCardWrapper {
+  width: 200px;
+  height: 320px;
+}
+
+.cardsList {
+  @include for-tablet-up {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  @include for-desktop {
+    padding: 0 65px;
+  }
+
+  @include for-desktop-up {
+    padding: 0 120px;
+  }
+}
+
+.cardsList li {
+  @include for-desktop {
+    margin-right: 125px;
+  }
+
+  @include for-desktop-up {
+    margin-right: 145px;
+  }
+}
+
+.cardsList li:nth-of-type(3n) {
+  @include for-desktop {
+    margin-right: 0px;
+  }
+
+  @include for-desktop-up {
+    margin-right: 0px;
+  }
+}
+.cardsList li:last-of-type {
+  @include for-desktop {
+    margin-right: 0px;
+  }
+
+  @include for-desktop-up {
+    margin-right: 0px;
+  }
+}
+
+// .cardsList li:no

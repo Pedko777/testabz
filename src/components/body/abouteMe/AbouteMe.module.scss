@@ -21,6 +21,13 @@
     justify-content: start;
     padding: 30px;
   }
+  @include for-desktop {
+    justify-content: start;
+    align-items: center;
+    height: 600px;
+    text-align: left;
+    padding: 30px;
+  }
   @include for-desktop-up {
     justify-content: start;
     align-items: center;
@@ -44,6 +51,12 @@
       width: 403px;
       font-size: 40px;
       line-height: 44px;
+      margin-bottom: 39px;
+    }
+    @include for-desktop {
+      width: 501px;
+      font-size: 50px;
+      line-height: 54px;
       margin-bottom: 39px;
     }
     @include for-desktop-up {
@@ -70,6 +83,11 @@
     width: 449px;
     margin-bottom: 39px;
   }
+  @include for-desktop {
+    width: 529px;
+    margin-bottom: 39px;
+  }
+
   @include for-desktop-up {
     width: 529px;
     margin-bottom: 39px;
