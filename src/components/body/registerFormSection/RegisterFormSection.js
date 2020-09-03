@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// // import usersSelectors from '../../../redux/users/usersSelectors';
-
+import { isEmail } from 'validator';
+import * as yup from 'yup';
 import styles from './registerFormSection.module.scss';
 import usersOperations from '../../../redux/users/usersOperations';
 import {
@@ -14,39 +14,77 @@ import {
   Col,
   Row,
   CustomInput,
+  FormText,
 } from 'reactstrap';
 
-import * as Yup from 'yup';
+// const FILE_SIZE = 70 * 70;
+// const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg'];
+// const validationSchema = yup.object().shape({
+//   name: yup
+//     .string()
+//     .min(2, 'Too Short name')
+//     .max(60, 'Too Long name')
+//     .required('A text is required'),
+//   email: yup
+//     .string()
+//     .min(2, 'Too short email')
+//     .max(100, 'Too Long email')
+//     .email('invalid email')
+//     .required('A email is required'),
+//   phone: yup.string().required('A phone is required'),
+//   position_id: yup.string().required('A position is required'),
+//   photo: yup
+//     .mixed()
+//     .required('A photo is required')
+//     .test(
+//       'fileSize',
+//       'File too large',
+//       value => value && value.size <= FILE_SIZE,
+//     )
+//     .test(
+//       'fileFormat',
+//       'Unsupported Format',
+//       value => value && SUPPORTED_FORMATS.includes(value.type),
+//     ),
+// });
 
 const RegisterFromSection = () => {
+  const data = new FormData();
+  const [errors, setError] = useState({});
+
   const [name, setName] = useState('');
   const handleInputName = e => {
     e.preventDefault();
     setName(e.target.value);
+    setError({ name: '' });
   };
 
   const [email, setEmail] = useState('');
   const handleInputEmail = e => {
     e.preventDefault();
     setEmail(e.target.value);
+    setError({ email: '' });
   };
 
   const [phone, setPhone] = useState('');
   const handleInputPhone = e => {
     e.preventDefault();
     setPhone(e.target.value);
+    setError({ phone: '' });
   };
 
   const [position_id, setPositionId] = useState('');
   const handleInputPositionId = e => {
     e.preventDefault();
     setPositionId(e.target.value);
+    setError({ position_id: '' });
   };
 
   const [photo, setPhoto] = useState(undefined);
   const handleInputPhoto = e => {
     e.preventDefault();
     setPhoto(e.target.files[0]);
+    setError({ photo: '' });
   };
   const dispatch = useDispatch();
 
@@ -58,14 +96,38 @@ const RegisterFromSection = () => {
     dispatch(usersOperations.fetchPositions());
   }, []);
 
+  const validate = () => {
+    let errors = {};
+
+    if (name === '') errors = 'First Name can not be blank.';
+    if (email === '') errors.email = 'Email can not be blank.';
+    if (!isEmail(email)) errors.email = 'Email must be valid.';
+    if (phone === '') errors.phone = 'Phone can not be blank.';
+    if (position_id === '') errors.position_id = 'position_id must be valid.';
+    if (photo === '') errors.photo = 'photo can not be blank.';
+
+    return errors;
+  };
+
   const positions = useSelector(state => state.positions);
 
   const handleSubmit = e => {
+    const errors = validate();
+
+    // data.append('name', name);
+    // data.append('email', email);
+    // data.append('phone', phone);
+    // data.append('position_id', position_id);
+    // data.append('photo', photo);
     e.preventDefault();
-    console.log();
-    dispatch(
-      usersOperations.postData({ name, email, phone, position_id, photo }),
-    );
+    console.log(errors);
+    console.log('name', name);
+    // if (Object.keys(errors).length === 0) {
+    //   console.log(data);
+    //   dispatch(usersOperations.postData(data));
+    // } else {
+    //   setError('');
+    // }
   };
 
   return (
@@ -85,37 +147,40 @@ const RegisterFromSection = () => {
                   <Label for="name">Name</Label>
                   <Input
                     onChange={handleInputName}
-                    invalid={false}
+                    invalid={errors.name ? true : false}
                     type="text"
                     name="name"
                     id="name"
                     placeholder="Your name"
                   />
+                  <FormFeedback>{errors.name && 'error'}</FormFeedback>
                 </FormGroup>
 
                 <FormGroup>
                   <Label for="email">Email</Label>
                   <Input
                     onChange={handleInputEmail}
-                    invalid={false}
+                    invalid={errors.email ? true : false}
                     type="email"
                     name="email"
                     id="email"
                     placeholder="Your email"
                   />
+                  <FormFeedback>{errors.email && 'error'}</FormFeedback>
                 </FormGroup>
 
                 <FormGroup>
                   <Label for="phone">Phone</Label>
                   <Input
                     onChange={handleInputPhone}
-                    invalid={false}
+                    invalid={errors.phone ? true : false}
                     type="text"
                     name="phone"
                     id="phone"
                     placeholder="Your phone"
                   />
-                  <FormFeedback>Phone error</FormFeedback>
+                  <FormText>Еnter phone number in open format</FormText>
+                  <FormFeedback>{errors.email && 'error'}</FormFeedback>
                 </FormGroup>
 
                 <FormGroup>
@@ -136,17 +201,19 @@ const RegisterFromSection = () => {
                         />
                       ))}
                   </div>
+                  {/* <FormText>error</FormText> */}
                 </FormGroup>
 
                 <FormGroup>
                   <Label for="exampleCustomFileBrowser">File Browser</Label>
                   <CustomInput
                     onChange={handleInputPhoto}
-                    invalid={false}
+                    invalid={errors.photo ? true : false}
                     type="file"
                     id="photo"
                     name="photo"
                   />
+                  <FormFeedback>{errors.photo && 'error'}</FormFeedback>
                 </FormGroup>
                 <Button color="primary">submit</Button>
               </Form>

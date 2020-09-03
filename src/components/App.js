@@ -13,6 +13,7 @@ import AbouteMe from './body/abouteMe/AbouteMe';
 import DatingSection from './body/datingSection/DatingSection';
 import UsersSection from './body/usersSection/UsersSection';
 import RegisterFormSection from './body/registerFormSection/RegisterFormSection';
+import Register from './body/registerFormSection/Register';
 // import RegisterForm from './body/registerFormSection/RegisterForm';
 
 // console.log(test)
@@ -35,7 +36,8 @@ const App = () => {
           <AbouteMe />
           <DatingSection />
           <UsersSection />
-          <RegisterFormSection />
+          {/* <RegisterFormSection /> */}
+          <Register />
           {/* <RegisterForm /> */}
         </Suspense>
       </BrowserRouter>
