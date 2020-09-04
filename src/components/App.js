@@ -1,11 +1,5 @@
 import React, { Suspense } from 'react';
-import {
-  BrowserRouter,
-  // Switch,
-  // Redirect,
-  // Route,
-  // NavLink,
-} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import ReactLoading from 'react-loading';
 
 import Header from './header/Header';
@@ -13,10 +7,7 @@ import AbouteMe from './body/abouteMe/AbouteMe';
 import DatingSection from './body/datingSection/DatingSection';
 import UsersSection from './body/usersSection/UsersSection';
 import RegisterFormSection from './body/registerFormSection/RegisterFormSection';
-import Register from './body/registerFormSection/Register';
-// import RegisterForm from './body/registerFormSection/RegisterForm';
-
-// console.log(test)
+import Footer from './footer/Footer';
 
 const App = () => {
   return (
@@ -36,9 +27,8 @@ const App = () => {
           <AbouteMe />
           <DatingSection />
           <UsersSection />
-          {/* <RegisterFormSection /> */}
-          <Register />
-          {/* <RegisterForm /> */}
+          <RegisterFormSection />
+          <Footer />
         </Suspense>
       </BrowserRouter>
     </>

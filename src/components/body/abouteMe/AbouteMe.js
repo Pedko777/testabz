@@ -29,7 +29,7 @@ const AbouteMe = () => {
           }
         </Media>
 
-        <Button text="Sing up now" />
+        <Button type="button" text="Sing up now" />
       </div>
     </div>
   );

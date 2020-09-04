@@ -4,7 +4,10 @@
 .sectionBg {
   background-color: $bg-secondary-color;
 }
-
+.sectionContainer {
+  display: flex;
+  justify-content: center;
+}
 .sectionWrapper {
   text-align: center;
   font-family: 'Open Sans';
@@ -78,7 +81,7 @@
 
 .cardsList li {
   @include for-desktop {
-    margin-right: 125px;
+    margin-right: 110px;
   }
 
   @include for-desktop-up {

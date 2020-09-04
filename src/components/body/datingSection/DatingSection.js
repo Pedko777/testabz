@@ -6,7 +6,7 @@ import { ReactComponent as ManLaptop } from '../../../ui/manLaptop.svg';
 
 const DatingSection = () => {
   return (
-    <div className={` container`}>
+    <div className={` ${styles.sectionContainer} container`}>
       <div className={` ${styles.sectionWrapper} wrapper`}>
         <h2 className={styles.sectionTitle}>Let's get acquainted</h2>
         <div className={styles.wrapper}>

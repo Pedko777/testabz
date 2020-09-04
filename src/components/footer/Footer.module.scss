@@ -1,0 +1,29 @@
+@import 'variables.scss';
+@import 'mixin.scss';
+
+.sectionContainer {
+  height: 60px;
+  line-height: 60px;
+  border-top: 2px solid #ececec;
+  text-align: center;
+}
+
+.navLink {
+  border: none;
+  background-color: $bg-main-color;
+  text-decoration: none;
+  color: #4c4b4b;
+  font-size: 14px;
+  @include for-phone-only {
+    line-height: 24px;
+  }
+  @include for-desktop-up {
+    line-height: 60px;
+  }
+}
+
+.navLink:hover {
+  transition: 0.3s ease-in-out;
+  opacity: 0.75;
+  color: $primary-color;
+}

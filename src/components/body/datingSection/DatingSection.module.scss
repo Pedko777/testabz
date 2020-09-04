@@ -1,5 +1,8 @@
 @import 'mixin.scss';
-
+.sectionContainer {
+  display: flex;
+  justify-content: center;
+}
 .sectionWrapper {
   text-align: center;
   font-family: 'Open Sans';

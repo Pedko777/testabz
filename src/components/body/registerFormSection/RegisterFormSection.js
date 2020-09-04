@@ -1,228 +1,239 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { isEmail } from 'validator';
-import * as yup from 'yup';
-import styles from './registerFormSection.module.scss';
-import usersOperations from '../../../redux/users/usersOperations';
+import React, { Component } from 'react';
 import {
   Form,
+  CustomInput,
+  FormText,
+  Input,
   Label,
   FormGroup,
   FormFeedback,
-  Button,
-  Input,
-  Col,
-  Row,
-  CustomInput,
-  FormText,
 } from 'reactstrap';
+import validator from 'validator';
 
-// const FILE_SIZE = 70 * 70;
-// const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg'];
-// const validationSchema = yup.object().shape({
-//   name: yup
-//     .string()
-//     .min(2, 'Too Short name')
-//     .max(60, 'Too Long name')
-//     .required('A text is required'),
-//   email: yup
-//     .string()
-//     .min(2, 'Too short email')
-//     .max(100, 'Too Long email')
-//     .email('invalid email')
-//     .required('A email is required'),
-//   phone: yup.string().required('A phone is required'),
-//   position_id: yup.string().required('A position is required'),
-//   photo: yup
-//     .mixed()
-//     .required('A photo is required')
-//     .test(
-//       'fileSize',
-//       'File too large',
-//       value => value && value.size <= FILE_SIZE,
-//     )
-//     .test(
-//       'fileFormat',
-//       'Unsupported Format',
-//       value => value && SUPPORTED_FORMATS.includes(value.type),
-//     ),
-// });
+import { connect } from 'react-redux';
+import usersOperations from '../../../redux/users/usersOperations';
+import usersSelectors from '../../../redux/users/usersSelectors';
+import { Modal } from 'react-bootstrap';
+import styles from './registerFormSection.module.scss';
+import Button from '../../buttons/Button';
+class RegisterFormSection extends Component {
+  constructor(props) {
+    super(props);
 
-const RegisterFromSection = () => {
-  const data = new FormData();
-  const [errors, setError] = useState({});
+    this.state = this.getInitialState();
+  }
 
-  const [name, setName] = useState('');
-  const handleInputName = e => {
-    e.preventDefault();
-    setName(e.target.value);
-    setError({ name: '' });
+  getInitialState = () => ({
+    data: {
+      name: '',
+      email: '',
+      phone: '',
+      position_id: '',
+      photo: '',
+    },
+    errors: {},
+    isShowModal: false,
+  });
+
+  componentDidMount() {
+    this.props.onFetchPositions();
+    this.props.onFetchToken();
+  }
+
+  handleChange = e => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        [e.target.name]: e.target.value,
+      },
+      errors: {
+        ...this.state.errors,
+        [e.target.name]: '',
+      },
+    });
   };
 
-  const [email, setEmail] = useState('');
-  const handleInputEmail = e => {
-    e.preventDefault();
-    setEmail(e.target.value);
-    setError({ email: '' });
+  handleChangePhoto = e => {
+    this.setState({
+      data: {
+        ...this.state.data,
+        [e.target.name]: e.target.files[0],
+      },
+      errors: {
+        ...this.state.errors,
+        [e.target.name]: '',
+      },
+    });
   };
 
-  const [phone, setPhone] = useState('');
-  const handleInputPhone = e => {
-    e.preventDefault();
-    setPhone(e.target.value);
-    setError({ phone: '' });
-  };
-
-  const [position_id, setPositionId] = useState('');
-  const handleInputPositionId = e => {
-    e.preventDefault();
-    setPositionId(e.target.value);
-    setError({ position_id: '' });
-  };
-
-  const [photo, setPhoto] = useState(undefined);
-  const handleInputPhoto = e => {
-    e.preventDefault();
-    setPhoto(e.target.files[0]);
-    setError({ photo: '' });
-  };
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(usersOperations.fetchToken());
-  }, []);
-
-  useEffect(() => {
-    dispatch(usersOperations.fetchPositions());
-  }, []);
-
-  const validate = () => {
+  validate = () => {
+    const { data } = this.state;
     let errors = {};
 
-    if (name === '') errors = 'First Name can not be blank.';
-    if (email === '') errors.email = 'Email can not be blank.';
-    if (!isEmail(email)) errors.email = 'Email must be valid.';
-    if (phone === '') errors.phone = 'Phone can not be blank.';
-    if (position_id === '') errors.position_id = 'position_id must be valid.';
-    if (photo === '') errors.photo = 'photo can not be blank.';
+    if (data.name === '' || data.name.length > 60 || data.name.length < 2)
+      errors.name = 'Error';
 
+    if (!validator.isAlpha(data.name, ['en-US'])) errors.name = 'Error';
+    if (!validator.isEmail(data.email)) errors.email = 'Error';
+    if (data.email === '' || data.email.length > 100 || data.email.length < 2)
+      errors.email = 'Error';
+    if (data.phone === '') errors.phone = 'Error';
+    if (!validator.isNumeric(data.phone, ['no_symbols: false ']))
+      errors.phone = 'Error';
+    if (data.position_id === '')
+      errors.position_id = 'Position_id must be valid.';
+    if (data.photo === '') errors.photo = 'Photo must be valid.';
+    // if (!validator.isByteLength(data.photo, { min: 1, max: 3145728 }))
+    //   errors.photo = 'Photo must be valid.';
+    // if (!validator.matches(data.photo, /^([0-9A-z\ \_]+)$/, [modifiers]))
+    //   errors.photo = 'Photo must be valid.';
     return errors;
   };
-
-  const positions = useSelector(state => state.positions);
-
-  const handleSubmit = e => {
-    const errors = validate();
-
-    // data.append('name', name);
-    // data.append('email', email);
-    // data.append('phone', phone);
-    // data.append('position_id', position_id);
-    // data.append('photo', photo);
-    e.preventDefault();
-    console.log(errors);
-    console.log('name', name);
-    // if (Object.keys(errors).length === 0) {
-    //   console.log(data);
-    //   dispatch(usersOperations.postData(data));
-    // } else {
-    //   setError('');
-    // }
+  closeModal = () => {
+    this.setState({ isShowModal: false });
   };
 
-  return (
-    <div className={`${styles.sectionWrapper} container`}>
-      <div className={` wrapper`}>
+  handleSubmit = e => {
+    e.preventDefault();
+    const FormDataFile = new FormData();
+    const {
+      data: { name, email, phone, position_id, photo },
+    } = this.state;
+    const errors = this.validate();
+
+    if (Object.keys(errors).length === 0) {
+      FormDataFile.append('name', name);
+      FormDataFile.append('email', email);
+      FormDataFile.append('phone', phone);
+      FormDataFile.append('position_id', position_id);
+      FormDataFile.append('photo', photo);
+      this.props.setData(FormDataFile);
+      this.setState(this.getInitialState());
+      this.setState({ isShowModal: true });
+    } else {
+      this.setState({ errors });
+      console.log(errors);
+    }
+  };
+
+  render() {
+    const { positions } = this.props;
+    const { data, errors, isShowModal } = this.state;
+    return (
+      <div className={` ${styles.sectionWrapper}  container`}>
         <h2 className={styles.sectionTitle}>Register to get a work</h2>
         <p className={styles.sectionDescription}>
           Attention! After successful registration and alert, update the list of
           users in the block from the top
         </p>
+        <div className={styles.formWrapper}>
+          <Form onSubmit={this.handleSubmit}>
+            <FormGroup>
+              <Label for="name">Name</Label>
+              <Input
+                id="name"
+                value={data.name}
+                invalid={errors.name ? true : false}
+                name="name"
+                placeholder="Your name"
+                onChange={this.handleChange}
+              />
+              <FormFeedback>{errors.name}</FormFeedback>
+            </FormGroup>
 
-        <div>
-          <Row>
-            <Col md={6}>
-              <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                  <Label for="name">Name</Label>
-                  <Input
-                    onChange={handleInputName}
-                    invalid={errors.name ? true : false}
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="Your name"
-                  />
-                  <FormFeedback>{errors.name && 'error'}</FormFeedback>
-                </FormGroup>
+            <FormGroup>
+              <Label for="email">Email</Label>
+              <Input
+                id="email"
+                value={data.email}
+                invalid={errors.email ? true : false}
+                name="email"
+                onChange={this.handleChange}
+                placeholder="Your email"
+              />
+              <FormFeedback>{errors.email}</FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Label for="phone">Phone number</Label>
+              <Input
+                id="phone"
+                value={data.phone}
+                invalid={errors.phone ? true : false}
+                name="phone"
+                onChange={this.handleChange}
+                placeholder="+380 XX XXX XX XX"
+              />
+              <FormText>Еnter phone number in open format</FormText>
+              <FormFeedback>{errors.phone}</FormFeedback>
+            </FormGroup>
 
-                <FormGroup>
-                  <Label for="email">Email</Label>
-                  <Input
-                    onChange={handleInputEmail}
-                    invalid={errors.email ? true : false}
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Your email"
-                  />
-                  <FormFeedback>{errors.email && 'error'}</FormFeedback>
-                </FormGroup>
+            <FormGroup>
+              <legend>Select your position</legend>
+              <Label for="position_id">Radios</Label>
+              <div>
+                {positions &&
+                  positions.map(position => (
+                    <CustomInput
+                      onChange={this.handleChange}
+                      value={position.id}
+                      invalid={errors.position_id ? true : false}
+                      key={position.id}
+                      type="radio"
+                      id={position.id}
+                      name="position_id"
+                      label={position.name}
+                    />
+                  ))}
+              </div>
+              <FormFeedback>{errors.position_id}</FormFeedback>
+            </FormGroup>
 
-                <FormGroup>
-                  <Label for="phone">Phone</Label>
-                  <Input
-                    onChange={handleInputPhone}
-                    invalid={errors.phone ? true : false}
-                    type="text"
-                    name="phone"
-                    id="phone"
-                    placeholder="Your phone"
-                  />
-                  <FormText>Еnter phone number in open format</FormText>
-                  <FormFeedback>{errors.email && 'error'}</FormFeedback>
-                </FormGroup>
-
-                <FormGroup>
-                  <legend>Select your position</legend>
-                  <Label for="exampleCheckbox">Radios</Label>
-                  <div>
-                    {positions &&
-                      positions.map(position => (
-                        <CustomInput
-                          onChange={handleInputPositionId}
-                          value={position.id}
-                          invalid={false}
-                          key={position.id}
-                          type="radio"
-                          id={position.id}
-                          name="positions_id"
-                          label={position.name}
-                        />
-                      ))}
-                  </div>
-                  {/* <FormText>error</FormText> */}
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="exampleCustomFileBrowser">File Browser</Label>
-                  <CustomInput
-                    onChange={handleInputPhoto}
-                    invalid={errors.photo ? true : false}
-                    type="file"
-                    id="photo"
-                    name="photo"
-                  />
-                  <FormFeedback>{errors.photo && 'error'}</FormFeedback>
-                </FormGroup>
-                <Button color="primary">submit</Button>
-              </Form>
-            </Col>
-          </Row>
+            <FormGroup>
+              <Label for="photo">File Browser</Label>
+              <CustomInput
+                onChange={this.handleChangePhoto}
+                invalid={errors.photo ? true : false}
+                type="file"
+                id="photo"
+                name="photo"
+              />
+              <FormFeedback>{errors.photo}</FormFeedback>
+            </FormGroup>
+            <div className={styles.btnWrapper}>
+              <Button type="submit" text="Sign up now" />
+            </div>
+            <Modal show={isShowModal} onHide={this.closeModal} centered>
+              <Modal.Header closeButton>
+                <Modal.Title>Congratulations </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                You have successfully passed the registration
+              </Modal.Body>
+              <Modal.Footer>
+                <Button text="Great" type="button" onClick={this.closeModal} />
+              </Modal.Footer>
+            </Modal>
+          </Form>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    positions: usersSelectors.getPositons(state),
+    token: usersSelectors.getToken(state),
+  };
 };
 
-export default RegisterFromSection;
+const mapDispatchToProps = dispatch => ({
+  setData: data => dispatch(usersOperations.postData(data)),
+  onFetchPositions: () => dispatch(usersOperations.fetchPositions()),
+  onFetchToken: () => dispatch(usersOperations.fetchToken()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RegisterFormSection);
